@@ -22,8 +22,7 @@ public class ProductRepositoryImpl extends BaseRepository<Product> implements Pr
         /**
          * TODO: EJERCICIO 1.a) Recupera las distintas categorias de los productos disponibles.
          */
-        String sql = """
-                """;
+        String sql = "SELECT DISTINCT CATEGORY FROM PRODUCTS";
         
         return this.queryForList(sql, Map.of());
     }
@@ -47,10 +46,13 @@ public class ProductRepositoryImpl extends BaseRepository<Product> implements Pr
          *  Pista: A la hora de filtrar, pasar los valores a mayúsculas o minúsculas. Ejemplo: Uso de la función SQL upper().
          */
         Map<String, Object> params = new HashMap<>();
+        String sql = "SELECT * FROM PRODUCTS";
+        if (categories.isPresent()) {
+            String category = categories.get().get(0);
+            //String category_good = category.charAt(0).toUpperCase() + category.slice(1);
+            sql = "SELECT * FROM PRODUCTS WHERE CATEGORY='"+ category +"'";
+        }
 
-        String sql = """
-            """;
-        
         return this.query(sql, params, Product.class);
     }
 
